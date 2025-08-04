@@ -1,0 +1,590 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Instituto Tecnológico de Mexicali - Portal de Servicios y Departamentos">
+    <title>ITM - Instituto Tecnológico de Mexicali</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-color: #1B396A;
+            --secondary-color: #235B4E;
+            --accent-color: #621132;
+            --gold-color: #B38E5D;
+            --text-light: #807E82;
+            --bg-light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+        }
+        
+        /* Header */
+        .header-top {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 15px 0;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,.1);
+            padding: 15px 0;
+        }
+        
+        .navbar-brand img {
+            height: 60px;
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 100px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="%23ffffff11" d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+        
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.3rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+        }
+        
+        /* Page Cards */
+        .page-card {
+            background: white;
+            border-radius: 15px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.1);
+            transition: all 0.3s ease;
+            height: 100%;
+            border: none;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .page-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));
+        }
+        
+        .page-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,.15);
+        }
+        
+        .page-icon {
+            width: 80px;
+            height: 80px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 25px;
+            font-size: 35px;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .page-card:hover .page-icon {
+            transform: scale(1.1);
+        }
+        
+        .page-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: var(--primary-color);
+            margin-bottom: 15px;
+        }
+        
+        .page-description {
+            color: #6c757d;
+            line-height: 1.6;
+            margin-bottom: 25px;
+        }
+        
+        .btn-visit {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .btn-visit:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(27, 57, 106, 0.3);
+            color: white;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 30px 20px;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+        
+        .stat-box:hover {
+            transform: translateY(-5px);
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        .stat-label {
+            color: #6c757d;
+            font-weight: 500;
+        }
+        
+        /* Footer */
+        footer {
+            background: linear-gradient(135deg, var(--primary-color) 0%, #0d2142 100%);
+            color: white;
+            padding: 50px 0 30px;
+        }
+        
+        .footer-section h5 {
+            color: var(--gold-color);
+            margin-bottom: 20px;
+        }
+        
+        .footer-links a {
+            color: rgba(255,255,255,0.8);
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: block;
+            padding: 5px 0;
+        }
+        
+        .footer-links a:hover {
+            color: white;
+            padding-left: 10px;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-on-scroll {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 2.5rem;
+            }
+            
+            .hero-subtitle {
+                font-size: 1.1rem;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Top -->
+    <div class="header-top">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <i class="fas fa-map-marker-alt"></i> Av. Tecnológico s/n, Mexicali, B.C.
+                </div>
+                <div class="col-md-6 text-end">
+                    <i class="fas fa-phone"></i> (686) 580-8000 | 
+                    <i class="fas fa-envelope"></i> contacto@itmexicali.edu.mx
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://placehold.co/150x60/1B396A/ffffff.png?text=Instituto+Tecnológico+de+Mexicali&font=roboto" alt="ITM Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#inicio" style="color: var(--primary-color);">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#servicios" style="color: var(--primary-color);">Servicios</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#estadisticas" style="color: var(--primary-color);">Estadísticas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link fw-semibold" href="#contacto" style="color: var(--primary-color);">Contacto</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="inicio">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h1 class="hero-title">Instituto Tecnológico de Mexicali</h1>
+                    <p class="hero-subtitle">
+                        Portal de Servicios Académicos y Departamentales
+                        <br>Innovación, Excelencia y Compromiso con la Educación Tecnológica
+                    </p>
+                    <div class="d-flex gap-3 justify-content-center flex-wrap mt-4">
+                        <a href="#servicios" class="btn btn-light btn-lg px-4 py-3">
+                            <i class="fas fa-arrow-down"></i> Explorar Servicios
+                        </a>
+                        <a href="mailto:contacto@itmexicali.edu.mx" class="btn btn-outline-light btn-lg px-4 py-3">
+                            <i class="fas fa-envelope"></i> Contactar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section class="py-5" id="servicios">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" style="color: var(--primary-color);">Servicios Disponibles</h2>
+                <p class="lead text-muted">Accede a los diferentes portales y servicios del instituto</p>
+                <div class="mx-auto" style="width: 100px; height: 3px; background: linear-gradient(90deg, var(--secondary-color), var(--accent-color));"></div>
+            </div>
+            
+            <div class="row g-4 mt-5">
+                <div class="col-lg-6">
+                    <div class="page-card animate-on-scroll">
+                        <div class="page-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h3 class="page-title text-center">Departamento de Sistemas y Computación</h3>
+                        <p class="page-description text-center">
+                            Portal académico del Departamento de Sistemas y Computación. 
+                            Información sobre carreras, laboratorios, investigación y programas académicos 
+                            de Ingeniería en Sistemas Computacionales e Ingeniería en Tecnologías de la Información.
+                        </p>
+                        <div class="text-center">
+                            <a href="Servicio - Pagina Ejemplo Departamenteo.html" class="btn-visit">
+                                <i class="fas fa-external-link-alt"></i>
+                                Visitar Departamento
+                            </a>
+                        </div>
+                        <div class="mt-4">
+                            <small class="text-muted">
+                                <i class="fas fa-check-circle text-success"></i> Información académica actualizada<br>
+                                <i class="fas fa-check-circle text-success"></i> Laboratorios especializados<br>
+                                <i class="fas fa-check-circle text-success"></i> Proyectos de investigación
+                            </small>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-6">
+                    <div class="page-card animate-on-scroll">
+                        <div class="page-icon">
+                            <i class="fas fa-university"></i>
+                        </div>
+                        <h3 class="page-title text-center">Portal Institucional ITM</h3>
+                        <p class="page-description text-center">
+                            Sitio web institucional completo del Instituto Tecnológico de Mexicali. 
+                            Información general, noticias, eventos, programas académicos y servicios 
+                            administrativos para toda la comunidad universitaria.
+                        </p>
+                        <div class="text-center">
+                            <a href="Servicio - Sugerencia Actualizacion Pagina Tecnologico.html" class="btn-visit">
+                                <i class="fas fa-external-link-alt"></i>
+                                Visitar Portal ITM
+                            </a>
+                        </div>
+                        <div class="mt-4">
+                            <small class="text-muted">
+                                <i class="fas fa-check-circle text-success"></i> Diseño moderno y responsivo<br>
+                                <i class="fas fa-check-circle text-success"></i> Información institucional completa<br>
+                                <i class="fas fa-check-circle text-success"></i> Noticias y eventos actualizados
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Statistics Section -->
+    <section class="stats-section" id="estadisticas">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" style="color: var(--primary-color);">ITM en Números</h2>
+                <p class="lead text-muted">Datos relevantes de nuestra institución</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <div class="stat-number">25+</div>
+                        <p class="stat-label">Carreras Profesionales</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <div class="stat-number">8,500+</div>
+                        <p class="stat-label">Estudiantes Activos</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <div class="stat-number">450+</div>
+                        <p class="stat-label">Profesores</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <div class="stat-number">50+</div>
+                        <p class="stat-label">Años de Experiencia</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-5 bg-light" id="contacto">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="display-5 fw-bold mb-4" style="color: var(--primary-color);">Información de Contacto</h2>
+                    <p class="lead mb-5">¿Necesitas más información? Contáctanos a través de nuestros diferentes canales</p>
+                    
+                    <div class="row mt-5">
+                        <div class="col-md-4 mb-4">
+                            <div class="contact-item">
+                                <i class="fas fa-map-marker-alt fa-3x mb-3" style="color: var(--secondary-color);"></i>
+                                <h5>Ubicación</h5>
+                                <p class="text-muted">
+                                    Av. Tecnológico s/n<br>
+                                    Col. Elías Calles<br>
+                                    Mexicali, B.C. 21376
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="contact-item">
+                                <i class="fas fa-phone fa-3x mb-3" style="color: var(--secondary-color);"></i>
+                                <h5>Teléfonos</h5>
+                                <p class="text-muted">
+                                    (686) 580-8000<br>
+                                    Conmutador principal<br>
+                                    Lun-Vie: 8:00 AM - 6:00 PM
+                                </p>
+                            </div>
+                        </div>
+                        <div class="col-md-4 mb-4">
+                            <div class="contact-item">
+                                <i class="fas fa-envelope fa-3x mb-3" style="color: var(--secondary-color);"></i>
+                                <h5>Email</h5>
+                                <p class="text-muted">
+                                    contacto@itmexicali.edu.mx<br>
+                                    informes@itmexicali.edu.mx<br>
+                                    Respuesta en 24-48 hrs
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4 footer-section">
+                    <h5><i class="fas fa-university"></i> Instituto Tecnológico de Mexicali</h5>
+                    <p class="text-light">
+                        Institución de educación superior comprometida con la excelencia académica 
+                        y la formación integral de profesionistas competentes.
+                    </p>
+                    <div class="social-links mt-3">
+                        <a href="#" class="text-light me-3"><i class="fab fa-facebook fa-2x"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-twitter fa-2x"></i></a>
+                        <a href="#" class="text-light me-3"><i class="fab fa-instagram fa-2x"></i></a>
+                        <a href="#" class="text-light"><i class="fab fa-youtube fa-2x"></i></a>
+                    </div>
+                </div>
+                <div class="col-md-4 footer-section">
+                    <h5>Enlaces Rápidos</h5>
+                    <div class="footer-links">
+                        <a href="Servicio - Pagina Ejemplo Departamenteo.html">Sistemas y Computación</a>
+                        <a href="Servicio - Sugerencia Actualizacion Pagina Tecnologico.html">Portal ITM</a>
+                        <a href="mailto:admisiones@itmexicali.edu.mx">Admisiones</a>
+                        <a href="mailto:sistemas@itmexicali.edu.mx">Soporte Técnico</a>
+                        <a href="#">Biblioteca Digital</a>
+                        <a href="#">Campus Virtual</a>
+                    </div>
+                </div>
+                <div class="col-md-4 footer-section">
+                    <h5>Servicios Académicos</h5>
+                    <div class="footer-links">
+                        <a href="#">Control Escolar</a>
+                        <a href="#">Servicios Estudiantiles</a>
+                        <a href="#">Becas y Apoyos</a>
+                        <a href="#">Bolsa de Trabajo</a>
+                        <a href="#">Educación Continua</a>
+                        <a href="#">Investigación</a>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2);">
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 Instituto Tecnológico de Mexicali. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-end">
+                    <small class="text-light">
+                        <i class="fas fa-code"></i> Desarrollado por el Departamento de Sistemas y Computación
+                    </small>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Smooth scroll for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Animation on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animationDelay = '0.1s';
+                    entry.target.classList.add('animate-on-scroll');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all cards
+        document.querySelectorAll('.page-card').forEach(card => {
+            observer.observe(card);
+        });
+
+        // Counter animation
+        const counters = document.querySelectorAll('.stat-number');
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = counter.textContent.replace(/[^\d]/g, '');
+                const increment = target / 100;
+                let current = 0;
+                
+                const timer = setInterval(() => {
+                    current += increment;
+                    if (current >= target) {
+                        counter.textContent = counter.textContent;
+                        clearInterval(timer);
+                    } else {
+                        counter.textContent = Math.floor(current) + counter.textContent.replace(/[\d]/g, '').replace(/[\d,]/g, '');
+                    }
+                }, 20);
+            });
+        };
+
+        // Trigger counter animation when stats section is visible
+        const statsObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    statsObserver.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        const statsSection = document.querySelector('#estadisticas');
+        if (statsSection) {
+            statsObserver.observe(statsSection);
+        }
+    </script>
+</body>
+</html>
