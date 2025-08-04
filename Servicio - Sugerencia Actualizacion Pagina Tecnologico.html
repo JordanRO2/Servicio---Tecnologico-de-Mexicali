@@ -1,0 +1,1106 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Instituto Tecnológico de Mexicali - Educación Superior Tecnológica de Excelencia">
+    <meta name="keywords" content="ITM, Instituto Tecnológico Mexicali, educación superior, ingeniería">
+    <title>Instituto Tecnológico de Mexicali - Portal Oficial</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- AOS Animation -->
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
+    <!-- Swiper CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.css">
+    
+    <style>
+        :root {
+            --itm-blue: #1B396A;
+            --itm-blue-light: #1B396A;
+            --itm-gray: #807E82;
+            --itm-black: #000000;
+            --gov-burgundy: #621132;
+            --gov-burgundy-light: #9D2449;
+            --gov-green: #235B4E;
+            --gov-green-dark: #10312B;
+            --gov-gold: #B38E5D;
+            --gov-gold-light: #D4C19C;
+            --gov-gray: #6F7271;
+            --itm-light: #f8f9fa;
+            --shadow-sm: 0 2px 4px rgba(0,0,0,0.1);
+            --shadow-lg: 0 10px 30px rgba(0,0,0,0.15);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        /* Top Bar */
+        .top-bar {
+            background-color: var(--itm-blue);
+            color: white;
+            font-size: 14px;
+            padding: 8px 0;
+        }
+        
+        .top-bar a {
+            color: white;
+            text-decoration: none;
+            margin: 0 10px;
+            transition: opacity 0.3s;
+        }
+        
+        .top-bar a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Main Navigation */
+        .main-nav {
+            background: white;
+            box-shadow: var(--shadow-sm);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+        
+        .main-nav.scrolled {
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .navbar-brand img {
+            height: 60px;
+            transition: height 0.3s ease;
+        }
+        
+        .main-nav.scrolled .navbar-brand img {
+            height: 50px;
+        }
+        
+        .nav-link {
+            color: var(--itm-blue) !important;
+            font-weight: 500;
+            padding: 0.8rem 1.2rem !important;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            width: 0;
+            height: 3px;
+            background: var(--gov-burgundy);
+            transition: all 0.3s ease;
+            transform: translateX(-50%);
+        }
+        
+        .nav-link:hover::after,
+        .nav-link.active::after {
+            width: 80%;
+        }
+        
+        .dropdown-menu {
+            border: none;
+            box-shadow: var(--shadow-lg);
+            border-radius: 10px;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Hero Section */
+        .hero-slider {
+            height: 70vh;
+            min-height: 500px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-slide {
+            height: 100%;
+            position: relative;
+            display: flex;
+            align-items: center;
+            background-size: cover;
+            background-position: center;
+        }
+        
+        .hero-slide::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(135deg, rgba(0,51,102,0.8) 0%, rgba(0,102,204,0.6) 100%);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            color: white;
+        }
+        
+        .hero-content h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-content p {
+            font-size: 1.3rem;
+            margin-bottom: 2rem;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        /* Quick Access */
+        .quick-access {
+            background: var(--itm-light);
+            padding: 40px 0;
+            margin-top: -60px;
+            position: relative;
+            z-index: 10;
+        }
+        
+        .quick-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .quick-card:hover {
+            transform: translateY(-10px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .quick-icon {
+            width: 70px;
+            height: 70px;
+            background: linear-gradient(135deg, var(--itm-blue), var(--gov-burgundy));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            font-size: 30px;
+            color: white;
+        }
+        
+        /* Programs Section */
+        .programs-section {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .program-card {
+            border: none;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .program-card:hover {
+            transform: scale(1.03);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .program-header {
+            background: linear-gradient(135deg, var(--itm-blue), var(--gov-green));
+            color: white;
+            padding: 20px;
+            position: relative;
+        }
+        
+        .program-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 0;
+            right: 0;
+            height: 40px;
+            background: white;
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+        }
+        
+        .program-body {
+            padding: 40px 20px 20px;
+        }
+        
+        /* News Section */
+        .news-section {
+            background: var(--itm-light);
+            padding: 80px 0;
+        }
+        
+        .news-card {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: var(--shadow-sm);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .news-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-lg);
+        }
+        
+        .news-image {
+            height: 200px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .news-image img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .news-card:hover .news-image img {
+            transform: scale(1.1);
+        }
+        
+        .news-date {
+            background: var(--gov-burgundy);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 14px;
+            position: absolute;
+            top: 15px;
+            right: 15px;
+        }
+        
+        /* Campus Life */
+        .campus-life {
+            padding: 80px 0;
+            background: white;
+        }
+        
+        .life-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+        
+        .life-item {
+            position: relative;
+            height: 250px;
+            border-radius: 15px;
+            overflow: hidden;
+            cursor: pointer;
+        }
+        
+        .life-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .life-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to top, rgba(0,51,102,0.9) 0%, transparent 50%);
+            display: flex;
+            align-items: flex-end;
+            padding: 20px;
+            transition: all 0.3s ease;
+        }
+        
+        .life-item:hover img {
+            transform: scale(1.1);
+        }
+        
+        .life-item:hover .life-overlay {
+            background: linear-gradient(to top, rgba(0,51,102,0.95) 0%, rgba(0,51,102,0.3) 100%);
+        }
+        
+        /* Footer */
+        footer {
+            background: var(--itm-blue);
+            color: white;
+            padding: 60px 0 20px;
+        }
+        
+        .footer-section h5 {
+            color: var(--gov-gold);
+            margin-bottom: 20px;
+        }
+        
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .footer-links li {
+            margin-bottom: 10px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            display: inline-block;
+        }
+        
+        .footer-links a:hover {
+            color: var(--gov-gold);
+            transform: translateX(5px);
+        }
+        
+        .social-icons {
+            display: flex;
+            gap: 15px;
+            margin-top: 20px;
+        }
+        
+        .social-icon {
+            width: 40px;
+            height: 40px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        
+        .social-icon:hover {
+            background: var(--gov-burgundy);
+            transform: translateY(-3px);
+        }
+        
+        /* Back to Top */
+        .back-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 50px;
+            height: 50px;
+            background: var(--gov-burgundy);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .back-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .back-to-top:hover {
+            background: var(--itm-blue);
+            transform: translateY(-5px);
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-content h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero-content p {
+                font-size: 1.1rem;
+            }
+            
+            .quick-access {
+                margin-top: 0;
+            }
+            
+            .life-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        /* Loading Animation */
+        .loader {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: white;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            transition: opacity 0.5s ease;
+        }
+        
+        .loader.hidden {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loader-content {
+            text-align: center;
+        }
+        
+        .loader-logo {
+            width: 100px;
+            animation: pulse 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.1); }
+            100% { transform: scale(1); }
+        }
+    </style>
+</head>
+<body>
+    <!-- Loader -->
+    <div class="loader" id="loader">
+        <div class="loader-content">
+            <img src="https://placehold.co/100/1B396A/ffffff.png?text=ITM&font=roboto" alt="ITM" class="loader-logo">
+            <p class="mt-3">Cargando...</p>
+        </div>
+    </div>
+
+    <!-- Top Bar -->
+    <div class="top-bar">
+        <div class="container">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <a href="tel:6865808000"><i class="fas fa-phone"></i> (686) 580-8000</a>
+                    <a href="mailto:info@itmexicali.edu.mx"><i class="fas fa-envelope"></i> info@itmexicali.edu.mx</a>
+                </div>
+                <div class="d-none d-md-block">
+                    <a href="#"><i class="fas fa-user"></i> Ambar</a>
+                    <a href="#"><i class="fas fa-graduation-cap"></i> Moodle</a>
+                    <a href="#"><i class="fas fa-envelope"></i> Correo</a>
+                    <a href="#"><i class="fas fa-book"></i> Biblioteca</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Main Navigation -->
+    <nav class="navbar navbar-expand-lg main-nav">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://placehold.co/120x60/1B396A/ffffff.png?text=ITM+Logo&font=roboto" alt="ITM Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="mainNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#inicio">Inicio</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Nosotros
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Historia</a></li>
+                            <li><a class="dropdown-item" href="#">Misión y Visión</a></li>
+                            <li><a class="dropdown-item" href="#">Organigrama</a></li>
+                            <li><a class="dropdown-item" href="#">Directorio</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Académico
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Oferta Educativa</a></li>
+                            <li><a class="dropdown-item" href="#">Posgrado</a></li>
+                            <li><a class="dropdown-item" href="#">Educación a Distancia</a></li>
+                            <li><a class="dropdown-item" href="#">Calendario Escolar</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown">
+                            Estudiantes
+                        </a>
+                        <ul class="dropdown-menu">
+                            <li><a class="dropdown-item" href="#">Servicios Escolares</a></li>
+                            <li><a class="dropdown-item" href="#">Becas</a></li>
+                            <li><a class="dropdown-item" href="#">Servicio Social</a></li>
+                            <li><a class="dropdown-item" href="#">Residencias</a></li>
+                        </ul>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#vinculacion">Vinculación</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#investigacion">Investigación</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-primary text-white px-4 ms-2" href="#">
+                            <i class="fas fa-user-plus"></i> Admisiones
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Slider -->
+    <section class="hero-slider swiper" id="inicio">
+        <div class="swiper-wrapper">
+            <div class="swiper-slide hero-slide" style="background-image: url('https://placehold.co/1920x800/1B396A/ffffff.png?text=Campus+ITM&font=montserrat');">
+                <div class="container">
+                    <div class="hero-content" data-aos="fade-up">
+                        <h1>Bienvenido al ITM</h1>
+                        <p>Formando profesionistas de excelencia desde 1981</p>
+                        <div class="d-flex gap-3">
+                            <a href="#" class="btn btn-primary btn-lg">Conoce Nuestras Carreras</a>
+                            <a href="#" class="btn btn-outline-light btn-lg">Tour Virtual</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide hero-slide" style="background-image: url('https://placehold.co/1920x800/235B4E/ffffff.png?text=Investigacion+ITM&font=montserrat');">
+                <div class="container">
+                    <div class="hero-content" data-aos="fade-up">
+                        <h1>Investigación e Innovación</h1>
+                        <p>Desarrollando tecnología para el futuro de México</p>
+                        <a href="#" class="btn btn-primary btn-lg">Ver Proyectos</a>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-slide hero-slide" style="background-image: url('https://placehold.co/1920x800/621132/ffffff.png?text=Vida+Estudiantil+ITM&font=montserrat');">
+                <div class="container">
+                    <div class="hero-content" data-aos="fade-up">
+                        <h1>Vida Estudiantil</h1>
+                        <p>Una experiencia universitaria integral</p>
+                        <a href="#" class="btn btn-primary btn-lg">Descubre Más</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+        <div class="swiper-button-next"></div>
+        <div class="swiper-button-prev"></div>
+    </section>
+
+    <!-- Quick Access -->
+    <section class="quick-access">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                    <div class="quick-card">
+                        <div class="quick-icon">
+                            <i class="fas fa-calendar-alt"></i>
+                        </div>
+                        <h5>Calendario Escolar</h5>
+                        <p>Consulta fechas importantes</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm">Ver Calendario</a>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                    <div class="quick-card">
+                        <div class="quick-icon">
+                            <i class="fas fa-user-graduate"></i>
+                        </div>
+                        <h5>Portal Estudiantes</h5>
+                        <p>Accede a tu información</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm">Ingresar</a>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                    <div class="quick-card">
+                        <div class="quick-icon">
+                            <i class="fas fa-book-open"></i>
+                        </div>
+                        <h5>Biblioteca Digital</h5>
+                        <p>Recursos en línea</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm">Explorar</a>
+                    </div>
+                </div>
+                <div class="col-md-3" data-aos="fade-up" data-aos-delay="400">
+                    <div class="quick-card">
+                        <div class="quick-icon">
+                            <i class="fas fa-briefcase"></i>
+                        </div>
+                        <h5>Bolsa de Trabajo</h5>
+                        <p>Oportunidades laborales</p>
+                        <a href="#" class="btn btn-outline-primary btn-sm">Ver Ofertas</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Programs Section -->
+    <section class="programs-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" data-aos="fade-up">Oferta Educativa</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">
+                    Programas acreditados de alta calidad
+                </p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+                    <div class="program-card">
+                        <div class="program-header">
+                            <h4><i class="fas fa-microchip"></i> Ingeniería Electrónica</h4>
+                        </div>
+                        <div class="program-body">
+                            <p>Forma profesionistas capaces de diseñar, implementar y mantener sistemas electrónicos.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success"></i> Acreditada por CACEI</li>
+                                <li><i class="fas fa-check text-success"></i> 9 Semestres</li>
+                                <li><i class="fas fa-check text-success"></i> Modalidad Presencial</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary w-100">Más Información</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+                    <div class="program-card">
+                        <div class="program-header">
+                            <h4><i class="fas fa-laptop-code"></i> Ingeniería en Sistemas</h4>
+                        </div>
+                        <div class="program-body">
+                            <p>Desarrolla soluciones tecnológicas innovadoras para las necesidades del mundo actual.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success"></i> Acreditada por CACEI</li>
+                                <li><i class="fas fa-check text-success"></i> 9 Semestres</li>
+                                <li><i class="fas fa-check text-success"></i> Modalidad Presencial</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary w-100">Más Información</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+                    <div class="program-card">
+                        <div class="program-header">
+                            <h4><i class="fas fa-industry"></i> Ingeniería Industrial</h4>
+                        </div>
+                        <div class="program-body">
+                            <p>Optimiza procesos productivos y sistemas organizacionales con enfoque sustentable.</p>
+                            <ul class="list-unstyled">
+                                <li><i class="fas fa-check text-success"></i> Acreditada por CACEI</li>
+                                <li><i class="fas fa-check text-success"></i> 9 Semestres</li>
+                                <li><i class="fas fa-check text-success"></i> Modalidad Presencial</li>
+                            </ul>
+                            <a href="#" class="btn btn-primary w-100">Más Información</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-outline-primary btn-lg">
+                    Ver Todas las Carreras <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="news-section">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" data-aos="fade-up">Noticias y Eventos</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">
+                    Lo más reciente del ITM
+                </p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="100">
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://placehold.co/400x200/1B396A/ffffff.png?text=Convenio+Aeroespacial+ITM&font=montserrat" alt="Noticia 1">
+                            <span class="news-date">4 Ago 2025</span>
+                        </div>
+                        <div class="p-4">
+                            <h5>ITM firma convenio con industria aeroespacial</h5>
+                            <p>Nuevas oportunidades de prácticas profesionales para estudiantes de ingeniería.</p>
+                            <a href="#" class="text-primary">Leer más <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="200">
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://placehold.co/400x200/235B4E/ffffff.png?text=Hackathon+ITM+2025&font=montserrat" alt="Noticia 2">
+                            <span class="news-date">2 Ago 2025</span>
+                        </div>
+                        <div class="p-4">
+                            <h5>Gran éxito del Hackathon ITM 2025</h5>
+                            <p>Más de 200 estudiantes participaron en el evento de programación más grande de la región.</p>
+                            <a href="#" class="text-primary">Leer más <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-lg-4 col-md-6" data-aos="fade-up" data-aos-delay="300">
+                    <div class="news-card">
+                        <div class="news-image">
+                            <img src="https://placehold.co/400x200/B38E5D/ffffff.png?text=Energia+Solar+ITM&font=montserrat" alt="Noticia 3">
+                            <span class="news-date">30 Jul 2025</span>
+                        </div>
+                        <div class="p-4">
+                            <h5>Proyecto de energía solar gana premio nacional</h5>
+                            <p>Estudiantes del ITM desarrollan innovador sistema de aprovechamiento solar.</p>
+                            <a href="#" class="text-primary">Leer más <i class="fas fa-arrow-right"></i></a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="text-center mt-5">
+                <a href="#" class="btn btn-primary btn-lg">Ver Todas las Noticias</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Campus Life -->
+    <section class="campus-life">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold" data-aos="fade-up">Vida en el Campus</h2>
+                <p class="lead text-muted" data-aos="fade-up" data-aos-delay="100">
+                    Descubre todo lo que el ITM tiene para ti
+                </p>
+            </div>
+            
+            <div class="life-grid">
+                <div class="life-item" data-aos="zoom-in" data-aos-delay="100">
+                    <img src="https://placehold.co/300x250/1B396A/ffffff.png?text=Deportes+ITM&font=roboto" alt="Deportes">
+                    <div class="life-overlay">
+                        <div>
+                            <h4 class="text-white">Actividades Deportivas</h4>
+                            <p class="text-white mb-0">Fútbol, básquetbol, voleibol y más</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="life-item" data-aos="zoom-in" data-aos-delay="200">
+                    <img src="https://placehold.co/300x250/235B4E/ffffff.png?text=Cultura+ITM&font=roboto" alt="Cultura">
+                    <div class="life-overlay">
+                        <div>
+                            <h4 class="text-white">Arte y Cultura</h4>
+                            <p class="text-white mb-0">Teatro, música, danza y artes visuales</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="life-item" data-aos="zoom-in" data-aos-delay="300">
+                    <img src="https://placehold.co/300x250/B38E5D/ffffff.png?text=Laboratorios+ITM&font=roboto" alt="Laboratorios">
+                    <div class="life-overlay">
+                        <div>
+                            <h4 class="text-white">Laboratorios</h4>
+                            <p class="text-white mb-0">Equipamiento de última generación</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="life-item" data-aos="zoom-in" data-aos-delay="400">
+                    <img src="https://placehold.co/300x250/807E82/ffffff.png?text=Servicios+ITM&font=roboto" alt="Cafetería">
+                    <div class="life-overlay">
+                        <div>
+                            <h4 class="text-white">Servicios</h4>
+                            <p class="text-white mb-0">Cafetería, biblioteca y más</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-5" style="background: linear-gradient(135deg, var(--itm-blue) 0%, var(--gov-green) 100%);">
+        <div class="container text-center text-white">
+            <h2 class="mb-4" data-aos="fade-up">¿Listo para ser parte del ITM?</h2>
+            <p class="lead mb-4" data-aos="fade-up" data-aos-delay="100">
+                Inicia tu camino hacia el éxito profesional
+            </p>
+            <div class="d-flex justify-content-center gap-3" data-aos="fade-up" data-aos-delay="200">
+                <a href="#" class="btn btn-light btn-lg">Proceso de Admisión</a>
+                <a href="#" class="btn btn-outline-light btn-lg">Contáctanos</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-4 mb-4">
+                    <img src="https://placehold.co/120x60/1B396A/ffffff.png?text=ITM+Logo&font=roboto" alt="ITM" height="60" class="mb-3">
+                    <p>Instituto Tecnológico de Mexicali<br>
+                    Av. Tecnológico s/n, Col. Elías Calles<br>
+                    C.P. 21396, Mexicali, B.C., México</p>
+                    <div class="social-icons">
+                        <a href="#" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-twitter"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-instagram"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-youtube"></i></a>
+                        <a href="#" class="social-icon"><i class="fab fa-linkedin-in"></i></a>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5>Enlaces Rápidos</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Admisiones</a></li>
+                            <li><a href="#">Oferta Educativa</a></li>
+                            <li><a href="#">Calendario</a></li>
+                            <li><a href="#">Directorio</a></li>
+                            <li><a href="#">Mapa del Sitio</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5>Estudiantes</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Ambar</a></li>
+                            <li><a href="#">Moodle</a></li>
+                            <li><a href="#">Correo</a></li>
+                            <li><a href="#">Biblioteca</a></li>
+                            <li><a href="#">Becas</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5>Servicios</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Centro de Idiomas</a></li>
+                            <li><a href="#">Educación Continua</a></li>
+                            <li><a href="#">Incubadora</a></li>
+                            <li><a href="#">Vinculación</a></li>
+                            <li><a href="#">CIITT</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="col-lg-2 col-md-6 mb-4">
+                    <div class="footer-section">
+                        <h5>Transparencia</h5>
+                        <ul class="footer-links">
+                            <li><a href="#">Aviso de Privacidad</a></li>
+                            <li><a href="#">Transparencia</a></li>
+                            <li><a href="#">Normatividad</a></li>
+                            <li><a href="#">Igualdad Laboral</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.2)">
+            
+            <div class="row align-items-center">
+                <div class="col-md-6">
+                    <p class="mb-0">&copy; 2025 Instituto Tecnológico de Mexicali. Todos los derechos reservados.</p>
+                </div>
+                <div class="col-md-6 text-md-end">
+                    <img src="https://placehold.co/150x50/B38E5D/ffffff.png?text=TecNM&font=roboto" alt="TecNM" height="40">
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Back to Top -->
+    <div class="back-to-top" id="backToTop">
+        <i class="fas fa-arrow-up"></i>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/swiper@10/swiper-bundle.min.js"></script>
+    
+    <script>
+        // Initialize AOS
+        AOS.init({
+            duration: 1000,
+            once: true
+        });
+        
+        // Initialize Swiper
+        const heroSwiper = new Swiper('.hero-slider', {
+            loop: true,
+            autoplay: {
+                delay: 5000,
+                disableOnInteraction: false,
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: true,
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            effect: 'fade',
+            fadeEffect: {
+                crossFade: true
+            }
+        });
+        
+        // Navbar scroll effect
+        window.addEventListener('scroll', function() {
+            const navbar = document.querySelector('.main-nav');
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+        
+        // Back to top button
+        const backToTop = document.getElementById('backToTop');
+        
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                backToTop.classList.add('show');
+            } else {
+                backToTop.classList.remove('show');
+            }
+        });
+        
+        backToTop.addEventListener('click', function() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+        
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+        
+        // Loader
+        window.addEventListener('load', function() {
+            setTimeout(() => {
+                document.getElementById('loader').classList.add('hidden');
+            }, 1000);
+        });
+        
+        // Dynamic counter animation
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+        
+        const countUp = (element) => {
+            const target = parseInt(element.getAttribute('data-target'));
+            const duration = 2000;
+            const increment = target / (duration / 16);
+            let current = 0;
+            
+            const updateCounter = () => {
+                current += increment;
+                if (current < target) {
+                    element.textContent = Math.ceil(current);
+                    requestAnimationFrame(updateCounter);
+                } else {
+                    element.textContent = target;
+                }
+            };
+            
+            updateCounter();
+        };
+        
+        // Add counter elements dynamically
+        const statsSection = document.querySelector('.programs-section');
+        if (statsSection) {
+            const statsDiv = document.createElement('div');
+            statsDiv.className = 'container mt-5 pt-5';
+            statsDiv.innerHTML = `
+                <div class="row text-center">
+                    <div class="col-md-3">
+                        <h2 class="display-4 fw-bold text-primary counter" data-target="8500">0</h2>
+                        <p class="text-muted">Estudiantes</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 class="display-4 fw-bold text-primary counter" data-target="450">0</h2>
+                        <p class="text-muted">Docentes</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 class="display-4 fw-bold text-primary counter" data-target="12">0</h2>
+                        <p class="text-muted">Programas Acreditados</p>
+                    </div>
+                    <div class="col-md-3">
+                        <h2 class="display-4 fw-bold text-primary counter" data-target="44">0</h2>
+                        <p class="text-muted">Años de Excelencia</p>
+                    </div>
+                </div>
+            `;
+            statsSection.appendChild(statsDiv);
+            
+            // Observe counters
+            const counters = document.querySelectorAll('.counter');
+            const counterObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        countUp(entry.target);
+                        counterObserver.unobserve(entry.target);
+                    }
+                });
+            }, observerOptions);
+            
+            counters.forEach(counter => {
+                counterObserver.observe(counter);
+            });
+        }
+    </script>
+</body>
+</html>

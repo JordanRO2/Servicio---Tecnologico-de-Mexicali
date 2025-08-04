@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Departamento de Sistemas y Computación - Instituto Tecnológico de Mexicali">
+    <title>Departamento de Sistemas y Computación - ITM</title>
+    
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    
+    <style>
+        :root {
+            --primary-color: #1B396A;
+            --secondary-color: #235B4E;
+            --accent-color: #621132;
+            --text-light: #807E82;
+            --bg-light: #f8f9fa;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        /* Header Styles */
+        .header-top {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+        
+        .navbar {
+            background-color: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,.1);
+        }
+        
+        .navbar-brand img {
+            height: 50px;
+        }
+        
+        .nav-link {
+            color: var(--primary-color) !important;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-link:hover {
+            color: var(--secondary-color) !important;
+            transform: translateY(-2px);
+        }
+        
+        /* Hero Section */
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 80px 0;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .hero-section::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 120"><path fill="%23ffffff22" d="M321.39,56.44c58-10.79,114.16-30.13,172-41.86,82.39-16.72,168.19-17.73,250.45-.39C823.78,31,906.67,72,985.66,92.83c70.05,18.48,146.53,26.09,214.34,3V0H0V27.35A600.21,600.21,0,0,0,321.39,56.44Z"></path></svg>') no-repeat bottom;
+            background-size: cover;
+        }
+        
+        /* Service Cards */
+        .service-card {
+            background: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 5px 20px rgba(0,0,0,.1);
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .service-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 15px 30px rgba(0,0,0,.15);
+        }
+        
+        .service-icon {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, var(--secondary-color), var(--accent-color));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: white;
+        }
+        
+        /* Stats Section */
+        .stats-section {
+            background-color: var(--bg-light);
+            padding: 60px 0;
+        }
+        
+        .stat-box {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .stat-number {
+            font-size: 3rem;
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 10px;
+        }
+        
+        /* Chart containers */
+        #performanceChart {
+            max-height: 200px !important;
+            height: 200px !important;
+        }
+        
+        #ticketsChart {
+            max-height: 200px !important;
+            height: 200px !important;
+        }
+        
+        #networkChart {
+            max-height: 300px !important;
+            height: 300px !important;
+        }
+        
+        /* News Section */
+        .news-card {
+            border: none;
+            transition: all 0.3s ease;
+            height: 100%;
+        }
+        
+        .news-card:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 25px rgba(0,0,0,.1);
+        }
+        
+        .news-date {
+            color: var(--accent-color);
+            font-weight: 600;
+            font-size: 14px;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 40px 0 20px;
+        }
+        
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            transition: opacity 0.3s;
+        }
+        
+        .footer-links a:hover {
+            opacity: 0.8;
+        }
+        
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .animate-fade-in {
+            animation: fadeInUp 0.8s ease-out;
+        }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section {
+                padding: 50px 0;
+            }
+            
+            .stat-number {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header Top -->
+    <div class="header-top">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <i class="fas fa-phone"></i> (686) 580-8000 | 
+                    <i class="fas fa-envelope"></i> sistemas@itmexicali.edu.mx
+                </div>
+                <div class="col-md-6 text-end">
+                    <i class="fas fa-clock"></i> Lun-Vie: 8:00 AM - 6:00 PM
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="navbar navbar-expand-lg navbar-light sticky-top">
+        <div class="container">
+            <a class="navbar-brand" href="#">
+                <img src="https://placehold.co/120x50/1B396A/ffffff.png?text=ITM+Logo&font=roboto" alt="ITM Logo">
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item"><a class="nav-link" href="#inicio">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#carreras">Carreras</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#laboratorios">Laboratorios</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#investigacion">Investigación</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#noticias">Noticias</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#contacto">Contacto</a></li>
+                    <li class="nav-item">
+                        <a class="nav-link btn btn-sm btn-primary text-white px-3 ms-2" href="#admisiones">
+                            <i class="fas fa-user-graduate"></i> Admisiones
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero-section" id="inicio">
+        <div class="container">
+            <div class="row align-items-center">
+                <div class="col-lg-8 animate-fade-in">
+                    <h1 class="display-4 fw-bold mb-4">Departamento de Sistemas y Computación</h1>
+                    <p class="lead mb-4">
+                        Formamos profesionistas competentes en el desarrollo de sistemas de información, 
+                        redes de computadoras y tecnologías emergentes para contribuir al desarrollo 
+                        tecnológico de la región y el país.
+                    </p>
+                    <div class="d-flex gap-3 flex-wrap">
+                        <a href="#carreras" class="btn btn-light btn-lg">
+                            <i class="fas fa-graduation-cap"></i> Nuestras Carreras
+                        </a>
+                        <a href="#laboratorios" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-flask"></i> Laboratorios
+                        </a>
+                        <a href="#investigacion" class="btn btn-outline-light btn-lg">
+                            <i class="fas fa-microscope"></i> Investigación
+                        </a>
+                    </div>
+                </div>
+                <div class="col-lg-4">
+                    <canvas id="networkChart" width="400" height="300"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Academic Programs Section -->
+    <section class="py-5" id="carreras">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Nuestras Carreras</h2>
+                <p class="lead text-muted">Programas académicos de excelencia en tecnología</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-laptop-code"></i>
+                        </div>
+                        <h4>Ingeniería en Sistemas Computacionales</h4>
+                        <p>Formación integral en desarrollo de software, redes, bases de datos y 
+                        administración de sistemas. Duración: 9 semestres.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Programación y desarrollo de software</li>
+                            <li><i class="fas fa-check text-success"></i> Redes y telecomunicaciones</li>
+                            <li><i class="fas fa-check text-success"></i> Bases de datos y sistemas</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline-primary btn-sm">Plan de estudios</a>
+                    </div>
+                </div>
+                
+                <div class="col-md-6">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-microchip"></i>
+                        </div>
+                        <h4>Ingeniería en Tecnologías de la Información</h4>
+                        <p>Especialización en gestión de tecnología, ciberseguridad y 
+                        transformación digital empresarial. Duración: 9 semestres.</p>
+                        <ul class="list-unstyled">
+                            <li><i class="fas fa-check text-success"></i> Gestión de proyectos TI</li>
+                            <li><i class="fas fa-check text-success"></i> Ciberseguridad</li>
+                            <li><i class="fas fa-check text-success"></i> Análisis de datos</li>
+                        </ul>
+                        <a href="#" class="btn btn-outline-primary btn-sm">Plan de estudios</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Laboratories Section -->
+    <section class="py-5 bg-light" id="laboratorios">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Laboratorios Especializados</h2>
+                <p class="lead text-muted">Infraestructura tecnológica de vanguardia</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-code"></i>
+                        </div>
+                        <h4>Lab. de Programación</h4>
+                        <p>40 equipos con software de desarrollo actualizado. Lenguajes: Java, Python, 
+                        C++, JavaScript, y herramientas de desarrollo web.</p>
+                        <small class="text-muted">Capacidad: 40 estudiantes</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-network-wired"></i>
+                        </div>
+                        <h4>Lab. de Redes</h4>
+                        <p>Equipos Cisco, simuladores de red, switches, routers y herramientas 
+                        de diagnóstico para prácticas de networking.</p>
+                        <small class="text-muted">Certificación Cisco disponible</small>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="service-card">
+                        <div class="service-icon">
+                            <i class="fas fa-shield-alt"></i>
+                        </div>
+                        <h4>Lab. de Ciberseguridad</h4>
+                        <p>Entorno controlado para pruebas de penetración, análisis forense 
+                        y prácticas de seguridad informática.</p>
+                        <small class="text-muted">Certificaciones éticas</small>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Research Section -->
+    <section class="py-5" id="investigacion">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Investigación y Desarrollo</h2>
+                <p class="lead text-muted">Proyectos de investigación en tecnologías emergentes</p>
+            </div>
+            
+            <div class="row">
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <div class="stat-number" data-target="15">0</div>
+                        <p class="text-muted">Proyectos Activos</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <div class="stat-number" data-target="45">0</div>
+                        <p class="text-muted">Estudiantes Investigadores</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <div class="stat-number" data-target="12">0</div>
+                        <p class="text-muted">Profesores Investigadores</p>
+                    </div>
+                </div>
+                <div class="col-md-3">
+                    <div class="stat-box">
+                        <div class="stat-number" data-target="8">0</div>
+                        <p class="text-muted">Publicaciones 2024</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="row mt-5">
+                <div class="col-lg-6">
+                    <h4 class="mb-3">Líneas de Investigación</h4>
+                    <ul class="list-group list-group-flush">
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-robot text-primary me-3"></i>
+                            Inteligencia Artificial y Machine Learning
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-mobile-alt text-primary me-3"></i>
+                            Desarrollo de Aplicaciones Móviles
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-cloud text-primary me-3"></i>
+                            Computación en la Nube
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-lock text-primary me-3"></i>
+                            Ciberseguridad y Criptografía
+                        </li>
+                        <li class="list-group-item d-flex align-items-center">
+                            <i class="fas fa-chart-bar text-primary me-3"></i>
+                            Big Data y Analítica
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-6">
+                    <h4 class="mb-3">Colaboraciones</h4>
+                    <canvas id="performanceChart" height="200"></canvas>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- News Section -->
+    <section class="py-5 bg-white" id="noticias">
+        <div class="container">
+            <div class="text-center mb-5">
+                <h2 class="display-5 fw-bold">Últimas Noticias</h2>
+                <p class="lead text-muted">Mantente informado sobre nuestras actividades</p>
+            </div>
+            
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="card news-card">
+                        <img src="https://placehold.co/350x200/1B396A/ffffff.png?text=Hackaton+ITM+2024&font=montserrat" class="card-img-top" alt="Hackaton">
+                        <div class="card-body">
+                            <p class="news-date"><i class="fas fa-calendar"></i> 30 Julio 2025</p>
+                            <h5 class="card-title">Hackaton ITM 2024 - Gran Éxito</h5>
+                            <p class="card-text">Más de 200 estudiantes participaron en el hackaton anual, 
+                            desarrollando soluciones innovadoras para la industria local.</p>
+                            <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card news-card">
+                        <img src="https://placehold.co/350x200/235B4E/ffffff.png?text=Nuevos+Laboratorios&font=montserrat" class="card-img-top" alt="Laboratorios">
+                        <div class="card-body">
+                            <p class="news-date"><i class="fas fa-calendar"></i> 25 Julio 2025</p>
+                            <h5 class="card-title">Inauguración de Laboratorios</h5>
+                            <p class="card-text">Se inauguraron los nuevos laboratorios de IA y Ciberseguridad 
+                            con tecnología de última generación.</p>
+                            <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="col-md-4">
+                    <div class="card news-card">
+                        <img src="https://placehold.co/350x200/621132/ffffff.png?text=Convenio+Empresarial&font=montserrat" class="card-img-top" alt="Convenio">
+                        <div class="card-body">
+                            <p class="news-date"><i class="fas fa-calendar"></i> 20 Julio 2025</p>
+                            <h5 class="card-title">Nuevo Convenio con Empresas TI</h5>
+                            <p class="card-text">Firmas de convenios con 15 empresas tecnológicas para 
+                            prácticas profesionales y bolsa de trabajo.</p>
+                            <a href="#" class="btn btn-primary btn-sm">Leer más</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section class="py-5 bg-light" id="contacto">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-8 mx-auto text-center">
+                    <h2 class="display-5 fw-bold mb-4">Información de Contacto</h2>
+                    <p class="lead mb-4">¿Interesado en estudiar con nosotros? Contáctanos para conocer 
+                    más sobre nuestros programas académicos y proceso de admisión.</p>
+                    <div class="row mt-5">
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <i class="fas fa-map-marker-alt fa-2x text-primary mb-3"></i>
+                                <h5>Ubicación</h5>
+                                <p>Av. Tecnológico s/n<br>Col. Elías Calles<br>Mexicali, B.C.</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <i class="fas fa-phone fa-2x text-primary mb-3"></i>
+                                <h5>Teléfono</h5>
+                                <p>(686) 580-8000<br>Ext. 5150 - 5151</p>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="mb-4">
+                                <i class="fas fa-envelope fa-2x text-primary mb-3"></i>
+                                <h5>Email</h5>
+                                <p>sistemas@itmexicali.edu.mx<br>admisiones@itmexicali.edu.mx</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex justify-content-center gap-3 mt-4">
+                        <a href="#" class="btn btn-primary btn-lg" id="admisiones">
+                            <i class="fas fa-user-graduate"></i> Proceso de Admisión
+                        </a>
+                        <a href="mailto:sistemas@itmexicali.edu.mx" class="btn btn-outline-primary btn-lg">
+                            <i class="fas fa-envelope"></i> Contactar
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-4">
+                    <h5>Departamento de Sistemas</h5>
+                    <p>Instituto Tecnológico de Mexicali<br>
+                    Av. Tecnológico s/n, Col. Elías Calles<br>
+                    Mexicali, B.C. México</p>
+                </div>
+                <div class="col-md-4">
+                    <h5>Enlaces Rápidos</h5>
+                    <div class="footer-links">
+                        <a href="#" class="d-block">Portal ITM</a>
+                        <a href="#" class="d-block">Mesa de Ayuda</a>
+                        <a href="#" class="d-block">Documentación</a>
+                        <a href="#" class="d-block">Políticas de Uso</a>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <h5>Horario de Atención</h5>
+                    <p>Lunes a Viernes: 8:00 AM - 6:00 PM<br>
+                    Soporte de emergencia: 24/7<br>
+                    <i class="fas fa-phone"></i> (686) 580-8000 Ext. 5150</p>
+                </div>
+            </div>
+            <hr class="my-4" style="border-color: rgba(255,255,255,0.1)">
+            <div class="text-center">
+                <p>&copy; 2025 Instituto Tecnológico de Mexicali. Todos los derechos reservados.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    
+    <script>
+        // Animación de números en estadísticas
+        const counters = document.querySelectorAll('.stat-number');
+        const speed = 200;
+        
+        const countUp = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+                
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(countUp, 1);
+                } else {
+                    counter.innerText = target;
+                }
+            });
+        };
+        
+        // Intersection Observer para activar animación
+        const observerOptions = {
+            threshold: 0.5,
+            rootMargin: '0px'
+        };
+        
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    countUp();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, observerOptions);
+        
+        const investigacionSection = document.querySelector('#investigacion');
+        if (investigacionSection) {
+            observer.observe(investigacionSection);
+        }
+        
+        // Gráfico de red en el hero (ahora representa actividad académica)
+        const networkCtx = document.getElementById('networkChart').getContext('2d');
+        const networkChart = new Chart(networkCtx, {
+            type: 'line',
+            data: {
+                labels: ['Ene', 'Feb', 'Mar', 'Abr', 'May', 'Jun'],
+                datasets: [{
+                    label: 'Estudiantes Activos',
+                    data: [850, 920, 880, 950, 930, 890],
+                    borderColor: 'rgba(255, 255, 255, 0.8)',
+                    backgroundColor: 'rgba(255, 255, 255, 0.1)',
+                    tension: 0.4
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        display: false
+                    }
+                },
+                scales: {
+                    x: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.8)'
+                        }
+                    },
+                    y: {
+                        grid: {
+                            color: 'rgba(255, 255, 255, 0.1)'
+                        },
+                        ticks: {
+                            color: 'rgba(255, 255, 255, 0.8)'
+                        }
+                    }
+                }
+            }
+        });
+        
+        // Gráfico de colaboraciones académicas
+        const performanceCtx = document.getElementById('performanceChart').getContext('2d');
+        const performanceChart = new Chart(performanceCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Empresas Locales', 'Universidades', 'Centros de Investigación', 'Gobierno', 'Startups'],
+                datasets: [{
+                    data: [12, 8, 5, 4, 6],
+                    backgroundColor: [
+                        '#003366',
+                        '#0066cc',
+                        '#ff6600',
+                        '#ffc107',
+                        '#28a745'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                interaction: {
+                    intersect: false
+                },
+                plugins: {
+                    legend: {
+                        position: 'bottom'
+                    }
+                },
+                animation: {
+                    duration: 0 // Disable animation to prevent sizing issues
+                }
+            }
+        });
+        
+        // Gráfico de tickets
+        const ticketsCtx = document.getElementById('ticketsChart').getContext('2d');
+        const ticketsChart = new Chart(ticketsCtx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Hardware', 'Software', 'Red', 'Cuenta de Usuario', 'Otros'],
+                datasets: [{
+                    data: [245, 189, 156, 98, 72],
+                    backgroundColor: [
+                        '#003366',
+                        '#0066cc',
+                        '#ff6600',
+                        '#ffc107',
+                        '#28a745'
+                    ]
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: false,
+                plugins: {
+                    legend: {
+                        position: 'right'
+                    }
+                }
+            }
+        });
+        
+        // Actualización en tiempo real (simulada)
+        setInterval(() => {
+            // Actualizar gráfico de estudiantes activos
+            const baseValues = [850, 920, 880, 950, 930, 890];
+            networkChart.data.datasets[0].data = baseValues.map(value => 
+                value + Math.floor(Math.random() * 40) - 20 // Variación de ±20
+            );
+            networkChart.update('none'); // Update without animation
+            
+            // Actualizar estadísticas de investigación con valores controlados
+            const stats = [
+                { selector: '[data-target="15"]', min: 14, max: 17 },
+                { selector: '[data-target="45"]', min: 42, max: 48 },
+                { selector: '[data-target="12"]', min: 11, max: 13 },
+                { selector: '[data-target="8"]', min: 7, max: 9 }
+            ];
+            
+            stats.forEach(stat => {
+                const element = document.querySelector(stat.selector);
+                if (element) {
+                    const randomValue = Math.random() * (stat.max - stat.min) + stat.min;
+                    element.innerText = Math.floor(randomValue);
+                }
+            });
+        }, 8000); // Actualización cada 8 segundos para datos académicos
+    </script>
+</body>
+</html>
